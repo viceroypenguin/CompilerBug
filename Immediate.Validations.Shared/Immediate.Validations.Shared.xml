@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Immediate.Validations.Shared</name>
+    </assembly>
+    <members>
+        <member name="T:Immediate.Validations.Shared.IValidationTarget`1">
+            <summary>
+                This represents a class that has a <see cref="M:Immediate.Validations.Shared.IValidationTarget`1.Validate(`0)"/> method to validate instances of that class.
+            </summary>
+            <typeparam name="T">
+            	The type which should be validated.
+            </typeparam>
+        </member>
+        <member name="M:Immediate.Validations.Shared.IValidationTarget`1.Validate(`0)">
+            <summary>
+                A method which can be used to validate instances of the type <typeparamref name="T"/>.
+            </summary>
+            <param name="target">
+            	An instance of type <typeparamref name="T"/> which should be validated.
+            </param>
+            <returns>
+                A list of <see cref="T:Immediate.Validations.Shared.ValidationError"/>, which represent failures in validating <paramref name="target"/>.
+            </returns>
+        </member>
+        <member name="T:Immediate.Validations.Shared.ValidateAttribute">
+            <summary>
+            	Applied to a class to indicate that validation methods should be generated.
+            </summary>
+        </member>
+        <member name="T:Immediate.Validations.Shared.ValidationBehavior`2">
+            <summary>
+                A <see cref="T:Immediate.Handlers.Shared.Behavior`2"/> which uses the <see cref="M:Immediate.Validations.Shared.IValidationTarget`1.Validate(`0)"/>
+                method to validate the provided <typeparamref name="TRequest"/>.
+            </summary>
+            <inheritdoc />
+        </member>
+        <member name="M:Immediate.Validations.Shared.ValidationBehavior`2.HandleAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+                Validate the <paramref name="request"/> and throw an exception if it fails.
+            </summary>
+            <inheritdoc />
+            <exception cref="T:Immediate.Validations.Shared.ValidationException">
+                Thrown if the <paramref name="request"/> does not validate successfully.
+            </exception>
+        </member>
+        <member name="T:Immediate.Validations.Shared.ValidationError">
+            <summary>
+            	Represents a validation failure.
+            </summary>
+        </member>
+        <member name="P:Immediate.Validations.Shared.ValidationError.PropertyName">
+            <summary>
+            	The name of the property which failed validation.
+            </summary>
+        </member>
+        <member name="P:Immediate.Validations.Shared.ValidationError.ErrorMessage">
+            <summary>
+            	The error message for the validation failure.
+            </summary>
+        </member>
+        <member name="T:Immediate.Validations.Shared.ValidationException">
+            <summary>
+            	An exception that represents a failed validation.
+            </summary>
+        </member>
+        <member name="P:Immediate.Validations.Shared.ValidationException.Errors">
+            <summary>
+            	The list of validation failures.
+            </summary>
+        </member>
+        <member name="T:Immediate.Validations.Shared.ValidatorAttribute">
+            <summary>
+                Applied to a property to indicate the property should be validated.
+            </summary>
+            <remarks>
+            <para>
+                A properly defined subclass of <see cref="T:Immediate.Validations.Shared.ValidatorAttribute"/> must have a <c><see langword="static"/> (<see
+                langword="bool"/> Invalid, <see langword="string"/>? DefaultMessage) ValidateProperty(? value)</c> method, which
+                will be used to validate properties.
+            </para>
+            <para>
+                The type of the first parameter must match the type of the property. If it does not, then the validation will
+                not be generated and a compiler diagnostic will be generated instead.
+            </para>
+            <para>
+                If the method is generic and type constraints are applied to the generic parameter, then the method can be used
+                for any type that satisfies the constraints of the parameter.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Immediate.Validations.Shared.ValidatorAttribute.Message">
+            <summary>
+            	A custom error message to represent the specific validation failure
+            </summary>
+        </member>
+        <member name="T:Immediate.Validations.Shared.EnumValueAttribute">
+            <summary>
+                Applied to a property to indicate that the value of the property should be a defined value of the <see
+                langword="enum" />.
+            </summary>
+        </member>
+        <member name="M:Immediate.Validations.Shared.EnumValueAttribute.ValidateProperty``1(``0)">
+            <summary>
+                Validates that the given <see langword="enum" /> <paramref name="value"/> is properly defined.
+            </summary>
+            <typeparam name="T">
+                The type of the provided <see langword="enum" /> value.
+            </typeparam>
+            <param name="value">
+                The value to validate.
+            </param>
+            <returns>
+                A <see cref="T:System.ValueTuple`2"/> indicating whether the property is valid or not, along with an error
+                message if the property is not valid.
+            </returns>
+        </member>
+        <member name="T:Immediate.Validations.Shared.NotEmptyOrWhiteSpaceAttribute">
+            <summary>
+                Applied to a <see langword="string"/> property to indicate that the value should not be <see langword="null"/>
+                or whitespace.
+            </summary>
+        </member>
+        <member name="M:Immediate.Validations.Shared.NotEmptyOrWhiteSpaceAttribute.ValidateProperty(System.String)">
+            <summary>
+                Validates that the given <see langword="string"/> <paramref name="value"/> is properly defined.
+            </summary>
+            <param name="value">
+                The <see langword="string"/> to validate.
+            </param>
+            <returns>
+                A <see cref="T:System.ValueTuple`2"/> indicating whether the property is valid or not, along with an error
+                message if the property is not valid.
+            </returns>
+        </member>
+        <member name="T:Immediate.Validations.Shared.NotNullAttribute">
+            <summary>
+                Applied to a property to indicate that the property should not be <see langword="null"/>.
+            </summary>
+        </member>
+        <member name="M:Immediate.Validations.Shared.NotNullAttribute.ValidateProperty``1(``0)">
+            <summary>
+                Validates that the given <paramref name="value"/> is not <see langword="null"/>.
+            </summary>
+            <typeparam name="T">
+                The type of the provided value.
+            </typeparam>
+            <param name="value">
+                The value to validate.
+            </param>
+            <returns>
+                A <see cref="T:System.ValueTuple`2"/> indicating whether the property is valid or not, along with an error
+                message if the property is not valid.
+            </returns>
+        </member>
+    </members>
+</doc>
